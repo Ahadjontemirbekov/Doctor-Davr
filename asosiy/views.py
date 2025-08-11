@@ -35,8 +35,8 @@ def home(request):
         'qabul': qabul,
         'galareya': galareya,
         'engkopsavol': engkopsavol,
-        'token': '7882168925:AAHGuE3lqNUW1lwC1jcYMD1Io8xdTpvDES0',
-        'kanal': '@qudash_uzi',
+        'token': os.environ.get('TOKEN'),
+        'kanal': os.environ.get('KANAL'),
     }
     return render(request,'user/index.html',context)
 
