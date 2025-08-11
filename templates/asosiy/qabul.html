@@ -1,0 +1,104 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section appointment-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Online qabulga yozilish</h2>
+            <p class="section-subtitle">Quyidagi formani to'ldiring va biz sizga eng yaqin vaqtni taklif qilamiz</p>
+        </div>
+
+        <div class="appointment-form-wrapper">
+            <form method="post" class="appointment-form">
+                {% csrf_token %}
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.shifokor.id_for_label }}">Shifokor</label>
+                        {{ form.shifokor }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.xizmat.id_for_label }}">Xizmat</label>
+                        {{ form.xizmat }}
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.sana.id_for_label }}">Sana</label>
+                        {{ form.sana }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.vaqt.id_for_label }}">Vaqt</label>
+                        {{ form.vaqt }}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.qoshimcha.id_for_label }}">Qo'shimcha ma'lumot (ixtiyoriy)</label>
+                    {{ form.qoshimcha }}
+                </div>
+                
+                {% if form.errors %}
+                <div class="form-errors">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <button type="submit" class="btn btn-primary">Yuborish</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Shifokor va xizmatlarni bog'lash
+    const shifokorSelect = document.getElementById('id_shifokor');
+    const xizmatSelect = document.getElementById('id_xizmat');
+    
+    function updateXizmatlar() {
+        const shifokorId = shifokorSelect.value;
+        if (shifokorId) {
+            fetch(`/api/shifokor-xizmatlari/${shifokorId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    xizmatSelect.innerHTML = '';
+                    data.xizmatlar.forEach(xizmat => {
+                        const option = document.createElement('option');
+                        option.value = xizmat.id;
+                        option.textContent = xizmat.nom;
+                        xizmatSelect.appendChild(option);
+                    });
+                });
+        }
+    }
+    
+    shifokorSelect.addEventListener('change', updateXizmatlar);
+    
+    // URL parametrlari bo'yicha tanlovlarni to'ldirish
+    const urlParams = new URLSearchParams(window.location.search);
+    const shifokorId = urlParams.get('shifokor');
+    const xizmatId = urlParams.get('xizmat');
+    
+    if (shifokorId) {
+        shifokorSelect.value = shifokorId;
+        updateXizmatlar().then(() => {
+            if (xizmatId) {
+                xizmatSelect.value = xizmatId;
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

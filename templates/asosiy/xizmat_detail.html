@@ -1,0 +1,54 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section service-detail-section">
+    <div class="container">
+        <div class="service-detail">
+            <div class="service-image">
+                <img src="{{ xizmat.rasm.url }}" alt="{{ xizmat.nom }}">
+            </div>
+            <div class="service-content">
+                <h1>{{ xizmat.nom }}</h1>
+                <p class="price">{{ xizmat.narx }} so'm</p>
+                <p class="duration">{{ xizmat.davomiylik }}</p>
+                
+                <div class="service-description">
+                    <h3>Tavsif</h3>
+                    <p>{{ xizmat.batafsil|linebreaks }}</p>
+                </div>
+                
+                <div class="service-actions">
+                    <a href="{% url 'qabul' %}?xizmat={{ xizmat.pk }}" class="btn btn-primary">Qabulga yozilish</a>
+                </div>
+            </div>
+        </div>
+
+        {% if boshqa_xizmatlar %}
+        <div class="related-services">
+            <h3>Shu turdagi boshqa xizmatlar</h3>
+            <div class="services-grid">
+                {% for xizmat in boshqa_xizmatlar %}
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="{{ xizmat.rasm.url }}" alt="{{ xizmat.nom }}">
+                    </div>
+                    <div class="service-info">
+                        <h3>{{ xizmat.nom }}</h3>
+                        <p>{{ xizmat.qisqa_tavsif }}</p>
+                        <div class="service-meta">
+                            <span class="price">{{ xizmat.narx }} so'm</span>
+                            <span class="duration">{{ xizmat.davomiylik }}</span>
+                        </div>
+                        <div class="service-actions">
+                            <a href="{% url 'xizmat_detail' xizmat.pk %}" class="btn btn-small">Batafsil</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="uz">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9D Tibbiy Markaz</title>
+    <link rel="stylesheet" href="{% static 'user/xxx.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+        </div>
+        <h2 class="loading-text">9D Tibbiy Markazga xush kelibsiz</h2>
+    </div>
+
+    <!-- Floating Navigation -->
+    <div class="floating-nav">
+        <a href="#home" class="floating-nav-item" data-tooltip="Bosh sahifa">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="#services" class="floating-nav-item" data-tooltip="Xizmatlar">
+            <i class="fas fa-procedures"></i>
+        </a>
+        <a href="#doctors" class="floating-nav-item" data-tooltip="Shifokorlar">
+            <i class="fas fa-user-md"></i>
+        </a>
+        <a href="#appointment" class="floating-nav-item" data-tooltip="Qabul">
+            <i class="fas fa-calendar-check"></i>
+        </a>
+        <a href="#contact" class="floating-nav-item" data-tooltip="Aloqa">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+    </div>
+
+    <!-- Kirish modali -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-wrapper">
+                <div class="auth-box">
+                    <div class="form-toggle">
+                        <button class="toggle-btn active" id="loginToggle">Kirish</button>
+                        <button class="toggle-btn" id="registerToggle">Ro'yxatdan o'tish</button>
+                    </div>
+
+                    <form id="loginForm" class="form active-form">
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" placeholder="Elektron pochta" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Parol" required>
+                            <span class="show-password"><i class="fas fa-eye"></i></span>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox"> Eslab qolish
+                            </label>
+                            <a href="#" class="forgot-password">Parolni unutdingizmi?</a>
+                        </div>
+                        <button type="submit" class="btn-auth">
+                            <span>Kirish</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div class="social-login">
+                            <p>Yoki ijtimoiy tarmoqlar orqali kirish:</p>
+                            <div class="social-icons">
+                                <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                                <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="registerForm" class="form">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" placeholder="Ism" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" placeholder="Elektron pochta" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" placeholder="Telefon raqam" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Parol" required>
+                            <span class="show-password"><i class="fas fa-eye"></i></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Parolni tasdiqlang" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">Men <a href="#">foydalanish shartlari</a> bilan tanishdim va roziman</label>
+                        </div>
+                        <button type="submit" class="btn-auth">
+                            <span>Ro'yxatdan o'tish</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sarlavha qismi -->
+    <header class="hero" id="home">
+        <div class="hero-particles" id="particles-js"></div>
+        <div class="overlay"></div>
+        <nav class="navbar">
+            <div class="logo">
+                {%for nomi in ishxnoanomi %}
+                <i class="fas fa-heartbeat"></i> {{nomi.sarlovha}}
+                {%endfor%}
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Bosh sahifa</a></li>
+                <li><a href="#about">Biz haqimizda</a></li>
+                <li><a href="#services">Xizmatlar</a></li>
+                <li><a href="#doctors">Shifokorlar</a></li>
+                <li><a href="#gallery">Galereya</a></li>
+                <li><a href="#testimonials">Sharhlar</a></li>
+                <li><a href="#contact">Aloqa</a></li>
+                <li>
+                    <button id="authBtn" class="nav-btn" onclick="window.location.href='/kirish/'">
+                        Kirish
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+        {%for kirgantext in kirgandagitext%}
+        <div class="hero-content">
+            <h1 class="hero-title animate__animated animate__fadeInDown">{{kirgantext.sarlovha}}</h1>
+            <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">{{kirgantext.text}}</p>
+            <div class="hero-buttons animate__animated animate__fadeIn animate__delay-2s">
+                <a href="#appointment" class="btn btn-primary">Online qabul</a>
+                <a href="#video" class="btn btn-secondary">Virtual tur</a>
+            </div>
+        </div>
+        {%endfor%}
+        <div class="scroll-down animate__animated animate__bounce animate__infinite animate__slow">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <!-- Asosiy kontent -->
+    <main>
+        <!-- Emergency Info Bar -->
+        <div class="emergency-bar">
+            <div class="container">
+                <div class="emergency-content">
+                    <div class="emergency-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h4>Favqulodda yordam</h4>
+                            {%for telefon_raqam in vaqt_manzil_telefon %}
+                            <p>{{telefon_raqam.telefon_raqam}}</p>
+                            {%endfor%}
+                        </div>
+                    </div>
+                    <div class="emergency-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Ish vaqti</h4>
+                            {%for vaqt in vaqt_manzil_telefon %}
+                            <p>{{vaqt.haftani_qaysi_kuni_boshlash}} - {{vaqt.haftani_qaysi_kuni_yakunlash}}: {{vaqt.ish_boshlash_vaqti}} - {{vaqt.ishni_yakunlash_vaqti}}</p>
+                            {%endfor%}
+                        </div>
+                    </div>
+                    <div class="emergency-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Manzil</h4>
+                            {%for manzil in vaqt_manzil_telefon %}
+                            <p>{{manzil.manzil}}</p>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="container">
+                <div class="features-grid">
+                    {%for models in model %}
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>{{models.sarlovha}}</h3>
+                        <p>{{models.text}}</p>
+                        <div class="feature-wave"></div>
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section about-section">
+            <div class="container">
+                <div class="section-header">
+                    {%for biz in biz_haqimizda %}
+                    <h2 class="section-title">Biz haqimizda</h2>
+                    <p class="section-subtitle">{{biz.birinchi_qator}}</p>
+                    {%endfor%}
+                </div>
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-main">
+                            {%for rasm1 in biz_haqimizda %}
+                            <img src="{{rasm1.birinchi_katta_rasm.url}}" alt="Klinika binosi">
+                            {%endfor%}
+                        </div>
+                        <div class="image-secondary">
+                            {%for rasm2 in biz_haqimizda %}
+                            <img src="{{rasm2.ikkinchi_kichkina_rasm.url}}" alt="Xonalar" class="about-img-2">
+                            {%endfor%}
+                        </div>
+                        <div class="experience-badge">
+                            {%for tajriba in biz_haqimizda %}
+                            <span class="exp-years">{{tajriba.nech_yillik_tajriba}}+</span>
+                            <span class="exp-text">Yillik tajriba</span>
+                            {%endfor%}
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        {%for sarlovhalar in biz_haqimizda %}
+                        <h3>{{sarlovhalar.pastda_sarlovha}}</h3>
+                        <p>{{sarlovhalar.text}}</p>
+                        {%endfor%}
+                        {%for ptchlar in ptchkalar %}
+                        <div class="about-points">
+                            <div class="point-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>{{ptchlar.ptch}}</span>
+                            </div>
+                        </div>
+                        {%endfor%}
+                        <div class="about-stats">
+                            {%for kv1 in kv %}
+                            <div class="stat-item">
+                                <span class="stat-number" data-count="{{kv1.kv_ichidagi_son}}">{{kv1.kv_ichidagi_son}}</span>
+                                <span class="stat-text">{{kv1.kv_ichidagi_text}}</span>
+                            </div>
+                            {%endfor%}
+                        </div>
+                        <a href="#services" class="btn btn-outline">Batafsil</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services Section -->
+        <section id="services" class="section services-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Xizmatlarimiz</h2>
+                    {% if xizmatlarimiz %}
+                        <p class="section-subtitle">{{ xizmatlarimiz.0.birinchi_qator }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="services-tabs">
+                    <!-- Tab tugmalari -->
+                    <div class="tab-buttons">
+                        {% for tashhis in tashhislar %}
+                            <button class="tab-btn {% if forloop.first %}active{% endif %}" data-tab="tab-{{ tashhis.id }}">
+                                {{ tashhis.tashhislar_nomi }}
+                            </button>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tab mazmunlari -->
+                    <div class="tab-contents">
+                        {% for tashhis in tashhislar %}
+                            <div class="tab-content {% if forloop.first %}active{% endif %}" id="tab-{{ tashhis.id }}">
+                                <div class="services-grid">
+                                    {% for xizmat in xizmatlarimiz %}
+                                        {% if xizmat.qaysi_turdagi.id == tashhis.id %}
+                                            <div class="service-card">
+                                                <div class="service-icon">
+                                                    <i class="fas fa-stethoscope"></i>
+                                                </div>
+                                                <h3>{{ xizmat.sarlovha }}</h3>
+                                                <p>{{ xizmat.text }}</p>
+                                                <a href="#" class="service-link">Batafsil <i class="fas fa-arrow-right"></i></a>
+                                            </div>
+                                        {% endif %}
+                                    {% empty %}
+                                        <p>Hozircha xizmatlar mavjud emas.</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="view-all">
+                    <a href="#" class="btn btn-primary">Barcha xizmatlarni ko'rish</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-tab');
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    button.classList.add('active');
+                    const targetTab = document.getElementById(targetId);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+        });
+        </script>
+
+
+        <!-- Video Tour Section -->
+        <section id="video" class="section video-section">
+            <div class="container">
+                <div class="section-header">
+                    {% for qator in videolar %}
+                    <h2 class="section-title">Virtual Tur</h2>
+                    <p class="section-subtitle">{{qator.birinchi_qator}}</p>
+                    {% endfor %}
+                </div>
+
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        {% if videolar %}
+                        <!-- Default birinchi video -->
+                        <video id="tourVideo" poster="{{ videolar.0.videoni_ustidagi_rasm.url }}">
+                            <source src="{{ videolar.0.video.url }}" type="video/mp4">
+                            Sizning brauzeringiz video elementini qo'llab-quvvatlamaydi.
+                        </video>
+                        <div class="video-overlay">
+                            <button class="play-btn"><i class="fas fa-play"></i></button>
+                            <h3>{{ videolar.0.video_ustodagi_soz }}</h3>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Dinamik tugmalar -->
+                    <div class="video-controls">
+                        {% for vid in videolar %}
+                        <button class="control-btn" data-video="{{ vid.video.url }}" data-poster="{{ vid.videoni_ustidagi_rasm.url }}">
+                            <i class="fas fa-video"></i>
+                            <span>{{ vid.video_turi.video_turi }}</span>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Doctors Section -->
+        <section id="doctors" class="section doctors-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Shifokorlarimiz</h2>
+                    <p class="section-subtitle">Xalqaro darajadagi malakaga ega mutaxassislar</p>
+                </div>
+
+                <!-- Bitta umumiy slider -->
+                <div class="doctors-slider swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for doctr in doctor %}
+                        <div class="doctor-card swiper-slide">
+                            <div class="doctor-image">
+                                <img src="{{ doctr.doctor_rasmi.url }}" alt="{{ doctr.docotr_famila_ismi }}">
+                                <div class="doctor-social">
+                                    <a href="{{ doctr.doctorni_facebook_url }}"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="{{ doctr.doctorni_twitter_url }}"><i class="fab fa-twitter"></i></a>
+                                    <a href="{{ doctr.doctorni_linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="{{ doctr.doctorni_instagrami_url }}"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                            <div class="doctor-info">
+                                <h3>{{ doctr.docotr_famila_ismi }}</h3>
+                                <p class="specialty">{{ doctr.docotr_mutaxasisligi }}</p>
+                                <div class="doctor-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span>4.7 (128 sharh)</span>
+                                </div>
+                                <p class="doctor-bio">{{ doctr.doctor_haqida_malumot }}</p>
+                                <div class="doctor-actions">
+                                    <a href="#appointment" class="btn btn-small">Qabulga yozilish</a>
+                                    <a href="#" class="btn btn-small btn-outline">Profil</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Slider navigation -->
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+
+                <div class="view-all">
+                    <a href="#" class="btn btn-outline">Barcha shifokorlarni ko'rish</a>
+                </div>
+            </div>
+        </section>
+        <!-- Appointment Section -->
+        <section id="appointment" class="section appointment-section">
+            <div class="container">
+                <div class="appointment-wrapper">
+                    {% for qb in qabul %}
+                    <div class="appointment-image">
+                        <img src="{{ qb.sarlovha_rasmi.url }}" alt="Qabulga yozilish">
+                        <div class="appointment-badge">
+                            <div class="badge-content">
+                                <span class="badge-number">24/7</span>
+                                <span class="badge-text">Qabulga yozilish</span>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <div class="appointment-form">
+                        <h2>Online qabulga yozilish</h2>
+                        <p>Quyidagi formani to'ldiring va biz sizga eng yaqin vaqtni taklif qilamiz</p>
+
+                        <form id="appointmentForm">
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Ismingiz" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="Elektron pochta" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Telefon raqam" required>
+                            </div>
+                            <div class="form-group">
+                                <select name="doctor" required>
+                                    <option value="" disabled selected>Shifokorni tanlang</option>
+                                    {% for d in doctor %}
+                                        <option value="{{ d.docotr_famila_ismi }}">{{ d.docotr_famila_ismi }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="info" placeholder="Qo'shimcha ma'lumot (ixtiyoriy)"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Yuborish</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <script>
+        document.getElementById("appointmentForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            // Bot token va kanal nomi
+            const token = "7882168925:AAHGuE3lqNUW1lwC1jcYMD1Io8xdTpvDES0"; // Bot tokeningizni shu yerga yozing
+            const chatId = "@qudash_uzi";   // Kanal username yoki -100xxxxxxxx
+
+            // Forma qiymatlarini olish
+            const form = e.target;
+            const name = form.name.value;
+            const email = form.email.value;
+            const phone = form.phone.value;
+            const doctor = form.doctor.value;
+            const date = form.date.value;
+            const info = form.info.value || "Yo'q";
+
+            // Yuboriladigan matn
+            const message = `
+        📋 Yangi qabul so'rovi:
+        👤 Ism: ${name}
+        📧 Email: ${email}
+        📱 Telefon: ${phone}
+        🩺 Shifokor: ${doctor}
+        📅 Sana: ${date}
+        💬 Qo'shimcha: ${info}
+            `;
+
+            // Telegram API orqali yuborish
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    alert("Ma'lumot muvaffaqiyatli yuborildi!");
+                    form.reset();
+                } else {
+                    alert("Xatolik yuz berdi: " + data.description);
+                }
+            })
+            .catch(err => {
+                alert("Xatolik yuz berdi!");
+                console.error(err);
+            });
+        });
+        </script>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="section testimonials-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Bemorlar Sharhlari</h2>
+                    <p class="section-subtitle">Bizning bemorlarimizning tajribalari va fikrlari</p>
+                </div>
+
+                <div class="testimonials-slider swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="testimonial-card swiper-slide">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="{% static 'user/images/client-1.jpg' %}" alt="Otabek Abdullayev">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Otabek Abdullayev</h4>
+                                    <div class="client-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-body">
+                                <p>"9D diagnostika usuli ajoyib! Oddiy tekshiruvlarda aniqlanmagan yurak muammom bor edi. Dr. Xakimov bu muammoni darhol aniqladi va samarali davolash usulini taklif qildi. Endi o'zimni juda yaxshi his qilyapman. Rahmat!"</p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <span class="testimonial-date">12.05.2023</span>
+                                <span class="testimonial-service">9D Kardiologik Tekshiruv</span>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card swiper-slide">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="{% static 'user/images/client-2.jpg' %}" alt="Dilnoza Xasanova">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Dilnoza Xasanova</h4>
+                                    <div class="client-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-body">
+                                <p>"Robot yordamidagi operatsiyam juda muvaffaqiyatli o'tdi. Dr. Yusupova va uning jamoasi ajoyib ish qilishdi. Og'riqsiz va tez tuzalish jarayoni. Har bir kishi uchun tavsiya qilaman!"</p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <span class="testimonial-date">28.04.2023</span>
+                                <span class="testimonial-service">Robot Jarrohligi</span>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card swiper-slide">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="{% static 'user/images/client-3.jpg' %}" alt="Shoxruh Mirzayev">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Shoxruh Mirzayev</h4>
+                                    <div class="client-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-body">
+                                <p>"Genetik testim orqali organizmimning turli dorilarga reaktsiyasini bilib oldim. Endi faqat menga mos keladigan dorilarni qabul qilaman. Dr. Rahimovga katta rahmat!"</p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <span class="testimonial-date">15.03.2023</span>
+                                <span class="testimonial-service">Farmakogenetika</span>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-card swiper-slide">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="{% static 'user/images/client-4.jpg' %}" alt="Laylo Karimova">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Laylo Karimova</h4>
+                                    <div class="client-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-body">
+                                <p>"Uzoq vaqt depressiyadan azob chekardim. Dr. Qodirovaning individual yondashuvi va innovatsion usullari yordamida nihoyat ozodlik hissini boshdan kechiryapman. Bu markaz haqiqatan ham farq qiladi!"</p>
+                            </div>
+                            <div class="testimonial-footer">
+                                <span class="testimonial-date">02.02.2023</span>
+                                <span class="testimonial-service">Psixoreabilitatsiya</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+
+        <!-- Swiper JS -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+        <!-- Slider init JS -->
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var testimonialSwiper = new Swiper('.testimonials-slider', {
+                loop: true,
+                grabCursor: true,
+                slidesPerView: 1,
+                spaceBetween: 20,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2
+                    },
+                    1024: {
+                        slidesPerView: 3
+                    }
+                }
+            });
+        });
+        </script>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section gallery-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Galereya</h2>
+                    <p class="section-subtitle">Doctor Davr Markazimizning fotolar va videolar to'plami</p>
+                </div>
+
+                <div class="gallery-grid">
+                    {% for a in galareya %}
+                    <div class="gallery-item">
+                        <img src="{{ a.rasm.url }}" alt="Klinika binosi">
+                        <div class="gallery-overlay">
+                            <a href="{{ a.rasm.url }}" class="gallery-view" data-fancybox="gallery">
+                                <i class="fas fa-expand"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="view-all">
+                    <a href="#" class="btn btn-outline">Barchasini ko'rish</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Ko'p Beriladigan Savollar</h2>
+                    <p class="section-subtitle">Bemorlar tomonidan eng ko'p beriladigan savollar va ularga javoblar</p>
+                </div>
+
+                <div class="faq-accordion">
+                    {% for i in engkopsavol %}
+                    <div class="accordion-item">
+                        <button class="accordion-btn">
+                            <span>{{i.savol}}</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p>{{i.javob}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Newsletter Section -->
+        <section class="section newsletter-section">
+            <div class="container">
+                <div class="newsletter-wrapper">
+                    <div class="newsletter-text">
+                        <h3>Yangiliklarga obuna bo'ling</h3>
+                        <p>Bizning yangiliklar, chegirmalar va sog'liq bo'yicha foydali maslahatlar haqida xabardor bo'ling</p>
+                    </div>
+                        <div class="newsletter-form">
+                            <div class="form-group">
+                                <a href="https://www.instagram.com/madinakhon141/" class="btn btn-primary">Obuna bo'lish</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i> 9D Tibbiy Markaz
+                </div>
+                <p>Sog'liq - hayotingiz qadri. Biz sizga eng zamonaviy 9D texnologiyasi asosida yuqori sifatli tibbiy xizmatlarni taklif etamiz.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Tezkor havolalar</h3>
+                <ul>
+                    <li><a href="#home">Bosh sahifa</a></li>
+                    <li><a href="#about">Biz haqimizda</a></li>
+                    <li><a href="#services">Xizmatlar</a></li>
+                    <li><a href="#doctors">Shifokorlar</a></li>
+                    <li><a href="#gallery">Galereya</a></li>
+                    <li><a href="#testimonials">Sharhlar</a></li>
+                    <li><a href="#contact">Aloqa</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Xizmatlar</h3>
+                <ul>
+                    <li><a href="#">9D Diagnostika</a></li>
+                    <li><a href="#">Robot Jarrohligi</a></li>
+                    <li><a href="#">Genetik Tadqiqotlar</a></li>
+                    <li><a href="#">Farmakogenetika</a></li>
+                    <li><a href="#">Psixoreabilitatsiya</a></li>
+                    <li><a href="#">Tez Tibbiy Yordam</a></li>
+                    <li><a href="#">Online Konsultatsiya</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Aloqa</h3>
+                <ul class="contact-list">
+                    <li><i class="fas fa-map-marker-alt"></i> Qoqon sh., O'zbekiston tumani</li>
+                    <li><i class="fas fa-phone-alt"></i> +998 90 309 53 12</li>
+                    <li><i class="fas fa-envelope"></i> madinaxon@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Dush-Yak: 8:00 - 16:00</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2025 9D Tibbiy Markaz. Barcha huquqlar himoyalangan.</p>
+                    <div class="footer-links">
+                        <a href="#">Maxfiylik siyosati</a>
+                        <a href="#">Foydalanish shartlari</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Scripts -->
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <script src="{% static 'js/xx.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section review-form-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Sharh qoldirish</h2>
+            <p class="section-subtitle">Shifokorimiz haqida fikringizni bildiring</p>
+        </div>
+
+        <div class="form-wrapper">
+            <form method="post" class="review-form">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for=" {{ form.baho.id_for_label }} ">Baholash</label>
+                    <div class="rating-stars">
+                        {% for i in "54321" %}
+                        <input type="radio" id="star{{ i }}" name="baho" value="{{ i }}" {% if form.baho.value == i %}checked{% endif %}>
+                        <label for="star{{ i }}"><i class="fas fa-star"></i></label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.matn.id_for_label }}">Sharh matni</label>
+                    {{ form.matn }}
+                </div>
+                
+                {% if form.errors %}
+                <div class="form-errors">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Sharhni yuborish</button>
+                    <a href="{% url 'shifokor_detail' shifokor.pk %}" class="btn btn-outline">Bekor qilish</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

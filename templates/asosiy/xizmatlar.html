@@ -1,0 +1,70 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section services-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Xizmatlarimiz</h2>
+            <p class="section-subtitle">Biz sizga tibbiyotning barcha sohalarida yuqori sifatli xizmatlarni taklif etamiz</p>
+        </div>
+
+        <div class="services-filter">
+            <form method="get" class="filter-form">
+                <select name="tur" onchange="this.form.submit()">
+                    <option value="">Barcha xizmat turlari</option>
+                    {% for tur in xizmat_turlari %}
+                    <option value="{{ tur.id }}" {% if tur.id == selected_tur_id %}selected{% endif %}>{{ tur.nom }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <div class="services-grid">
+            {% for xizmat in xizmatlar %}
+            <div class="service-card">
+                <div class="service-image">
+                    <img src="{{ xizmat.rasm.url }}" alt="{{ xizmat.nom }}">
+                </div>
+                <div class="service-info">
+                    <h3>{{ xizmat.nom }}</h3>
+                    <p>{{ xizmat.qisqa_tavsif }}</p>
+                    <div class="service-meta">
+                        <span class="price">{{ xizmat.narx }} so'm</span>
+                        <span class="duration">{{ xizmat.davomiylik }}</span>
+                    </div>
+                    <div class="service-actions">
+                        <a href="{% url 'xizmat_detail' xizmat.pk %}" class="btn btn-small">Batafsil</a>
+                        <a href="{% url 'qabul' %}?xizmat={{ xizmat.pk }}" class="btn btn-small btn-outline">Qabul</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="no-results">
+                <p>Hech qanday xizmat topilmadi</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if selected_tur_id %}&tur={{ selected_tur_id }}{% endif %}" class="page-link">&laquo;</a>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <span class="current-page">{{ num }}</span>
+            {% else %}
+            <a href="?page={{ num }}{% if selected_tur_id %}&tur={{ selected_tur_id }}{% endif %}" class="page-link">{{ num }}</a>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if selected_tur_id %}&tur={{ selected_tur_id }}{% endif %}" class="page-link">&raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

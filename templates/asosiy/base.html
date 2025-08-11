@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uz">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}9D Tibbiy Markaz{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'user/asosiy.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-spinner">
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+            <div class="spinner-circle"></div>
+        </div>
+        <h2 class="loading-text">9D Tibbiy Markazga xush kelibsiz</h2>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i> 9D Tibbiy Markaz
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'bosh' %}">Bosh sahifa</a></li>
+                    <li><a href="{% url 'xizmatlar' %}">Xizmatlar</a></li>
+                    <li><a href="{% url 'shifokorlar' %}">Shifokorlar</a></li>
+                    <li><a href="{% url 'qabul' %}">Qabul</a></li>
+                    <li><a href="{% url 'xabar' %}">Aloqa</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'mening_qabullarim' %}">Mening kabinetim</a></li>
+                    <li><a href="{% url 'logout' %}">Chiqish</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Kirish</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>9D Tibbiy Markaz</h3>
+                    <p>Sog'liq - hayotingiz qadri. Biz sizga eng zamonaviy 9D texnologiyasi asosida yuqori sifatli tibbiy xizmatlarni taklif etamiz.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Tezkor havolalar</h3>
+                    <ul>
+                        <li><a href="{% url 'bosh' %}">Bosh sahifa</a></li>
+                        <li><a href="{% url 'xizmatlar' %}">Xizmatlar</a></li>
+                        <li><a href="{% url 'shifokorlar' %}">Shifokorlar</a></li>
+                        <li><a href="{% url 'qabul' %}">Qabul</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Aloqa</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Toshkent sh., Yunusobod tumani</li>
+                        <li><i class="fas fa-phone-alt"></i> +998 90 123 45 67</li>
+                        <li><i class="fas fa-envelope"></i> info@9dclinic.uz</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 9D Tibbiy Markaz. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="{% static 'js/asosiy.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

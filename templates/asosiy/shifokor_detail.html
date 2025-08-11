@@ -1,0 +1,104 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section doctor-detail-section">
+    <div class="container">
+        <div class="doctor-detail">
+            <div class="doctor-image">
+                <img src="{{ shifokor.rasm.url }}" alt="{{ shifokor.user.get_full_name }}">
+                {% if shifokor.ijtimoiy_tarmoqlar %}
+                <div class="doctor-social">
+                    {% for name, url in shifokor.ijtimoiy_tarmoqlar.items %}
+                    <a href="{{ url }}" target="_blank"><i class="fab fa-{{ name }}"></i></a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="doctor-content">
+                <h1>{{ shifokor.user.get_full_name }}</h1>
+                <p class="specialty">{{ shifokor.mutaxassislik }}</p>
+                <p class="experience">{{ shifokor.tajriba }} yillik tajriba</p>
+                <p class="rank">{{ shifokor.get_daraja_display }}</p>
+                
+                <div class="doctor-description">
+                    <h3>Shifokor haqida</h3>
+                    <p>{{ shifokor.malumot|linebreaks }}</p>
+                </div>
+                
+                <div class="work-time">
+                    <h3>Ish vaqti</h3>
+                    <p>{{ shifokor.ish_vaqti }}</p>
+                </div>
+                
+                <div class="doctor-actions">
+                    <a href="{% url 'qabul' %}?shifokor={{ shifokor.pk }}" class="btn btn-primary">Qabulga yozilish</a>
+                    <a href="{% url 'sharh' shifokor.pk %}" class="btn btn-outline">Sharh qoldirish</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="doctor-services">
+            <h3>Taklif etiladigan xizmatlar</h3>
+            <div class="services-grid">
+                {% for xizmat in xizmatlar %}
+                <div class="service-card">
+                    <div class="service-info">
+                        <h3>{{ xizmat.nom }}</h3>
+                        <p>{{ xizmat.qisqa_tavsif }}</p>
+                        <div class="service-meta">
+                            <span class="price">{{ xizmat.narx }} so'm</span>
+                            <span class="duration">{{ xizmat.davomiylik }}</span>
+                        </div>
+                        <div class="service-actions">
+                            <a href="{% url 'xizmat_detail' xizmat.pk %}" class="btn btn-small">Batafsil</a>
+                            <a href="{% url 'qabul' %}?shifokor={{ shifokor.pk }}&xizmat={{ xizmat.pk }}" class="btn btn-small btn-outline">Qabul</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="no-results">
+                    <p>Hozircha xizmatlar mavjud emas</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if sharhlar %}
+        <div class="doctor-reviews">
+            <h3>Bemorlar sharhlari</h3>
+            <div class="reviews-grid">
+                {% for sharh in sharhlar %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="client-info">
+                            <h4>{{ sharh.bemor.get_full_name }}</h4>
+                            <div class="rating">
+                                {% for i in "12345" %}
+                                {% if forloop.counter <= sharh.baho %}
+                                <i class="fas fa-star"></i>
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <span class="review-date">{{ sharh.created_at|date:"d.m.Y" }}</span>
+                    </div>
+                    <div class="review-content">
+                        <p>{{ sharh.matn }}</p>
+                    </div>
+                    {% if sharh.javob %}
+                    <div class="review-response">
+                        <strong>Shifokor javobi:</strong>
+                        <p>{{ sharh.javob }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

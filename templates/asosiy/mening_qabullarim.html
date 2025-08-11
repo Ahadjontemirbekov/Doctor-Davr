@@ -1,0 +1,49 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section appointments-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Mening qabullarim</h2>
+            <p class="section-subtitle">Sizning oldindan belgilangan qabullaringiz ro'yxati</p>
+        </div>
+
+        <div class="appointments-list">
+            {% if qabullar %}
+            {% for qabul in qabullar %}
+            <div class="appointment-card {% if qabul.holat == 'bek' %}cancelled{% elif qabul.holat == 'baj' %}completed{% endif %}">
+                <div class="appointment-info">
+                    <div class="appointment-meta">
+                        <span class="date">{{ qabul.sana|date:"d.m.Y" }}</span>
+                        <span class="time">{{ qabul.vaqt|time:"H:i" }}</span>
+                        <span class="status">{{ qabul.get_holat_display }}</span>
+                    </div>
+                    <div class="appointment-details">
+                        <h3>{{ qabul.xizmat.nom }}</h3>
+                        <p class="doctor">{{ qabul.shifokor.user.get_full_name }} - {{ qabul.shifokor.mutaxassislik }}</p>
+                        {% if qabul.qoshimcha %}
+                        <p class="notes">{{ qabul.qoshimcha }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="appointment-actions">
+                    {% if qabul.holat == 'yang' or qabul.holat == 'tas' %}
+                    <form method="post" action="{% url 'qabul_bekor_qilish' qabul.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-small btn-danger">Bekor qilish</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="no-results">
+                <p>Sizda hozircha qabullar mavjud emas</p>
+                <a href="{% url 'qabul' %}" class="btn btn-primary">Qabulga yozilish</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'asosiy/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero" id="home">
+    <div class="hero-particles" id="particles-js"></div>
+    <div class="overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title animate__animated animate__fadeInDown">Sog'liq - Hayotingiz garovi</h1>
+        <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">9D Tibbiy Markazga xush kelibsiz</p>
+        <div class="hero-buttons animate__animated animate__fadeIn animate__delay-2s">
+            <a href="{% url 'qabul' %}" class="btn btn-primary">Online qabul</a>
+            <a href="#video" class="btn btn-secondary">Virtual tur</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="features-grid">
+            {% for xizmat_turi in xizmat_turlari %}
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas {{ xizmat_turi.icon }}"></i>
+                </div>
+                <h3>{{ xizmat_turi.nom }}</h3>
+                <p>{{ xizmat_turi.tavsif|truncatechars:50 }}</p>
+                <div class="feature-wave"></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Shifokorlar -->
+<section class="doctors-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Shifokorlarimiz</h2>
+            <p class="section-subtitle">Malakali mutaxassislarimiz bilan tanishing</p>
+        </div>
+        
+        <div class="doctors-grid">
+            {% for shifokor in shifokorlar %}
+            <div class="doctor-card">
+                <div class="doctor-image">
+                    <img src="{{ shifokor.rasm.url }}" alt="{{ shifokor.user.get_full_name }}">
+                </div>
+                <div class="doctor-info">
+                    <h3>{{ shifokor.user.get_full_name }}</h3>
+                    <p class="specialty">{{ shifokor.mutaxassislik }}</p>
+                    <div class="doctor-actions">
+                        <a href="{% url 'shifokor_detail' shifokor.pk %}" class="btn btn-small">Profil</a>
+                        <a href="{% url 'qabul' %}?shifokor={{ shifokor.pk }}" class="btn btn-small btn-outline">Qabul</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="view-all">
+            <a href="{% url 'shifokorlar' %}" class="btn btn-outline">Barcha shifokorlar</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
