@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import OnlineQabul
+from .models import *
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -18,3 +18,32 @@ class AppointmentForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+class BemorForm(forms.ModelForm):
+    class Meta:
+        model = Bemorlar
+        fields = ['toliq_ism', 'yil', 'hudud', 'summa']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

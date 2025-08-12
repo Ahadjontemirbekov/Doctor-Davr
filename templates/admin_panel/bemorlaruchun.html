@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bemorlar Ma'lumotlari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'admin_panel/bemor_r.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-injured"></i> Bemorlar Ro'yxati</h1>
+            <p>Bemorlarning to'liq ma'lumotlarini kiritish uchun forma</p>
+        </div>
+
+        <form id="bemorForm" class="bemor-form" method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="toliq_ism"><i class="fas fa-signature"></i> To'liq Ism</label>
+                    <input type="text" id="toliq_ism" name="toliq_ism" required placeholder="Bemorning to'liq ismini kiriting">
+                    <span class="focus-border"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="yil"><i class="fas fa-calendar-alt"></i> Tug'ilgan Yili</label>
+                    <input type="number" id="yil" name="yil" min="1900" max="2023" required placeholder="Masalan: 1985">
+                    <span class="focus-border"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="hudud"><i class="fas fa-map-marker-alt"></i> Hudud</label>
+                    <input type="text" id="hudud" name="hudud" required placeholder="Masalan: Farg'ona">
+                    <span class="focus-border"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="summa"><i class="fas fa-money-bill-wave"></i> Summa</label>
+                    <input type="number" id="summa" name="summa" min="0" required placeholder="To'lov miqdori">
+                    <span class="focus-border"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn submit-btn">
+                    <i class="fas fa-save"></i> Saqlash
+                </button>
+                <button type="reset" class="btn reset-btn">
+                    <i class="fas fa-undo"></i> Tozalash
+                </button>
+            </div>
+        </form>
+
+        <div class="bemorlar-list">
+            <h2><i class="fas fa-list-ul"></i> Ro'yxatdagi Bemorlar</h2>
+
+            <div class="table-container">
+                <table id="bemorlarTable">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-signature"></i> Ism</th>
+                            <th><i class="fas fa-calendar-alt"></i> Yil</th>
+                            <th><i class="fas fa-map-marker-alt"></i> Hudud</th>
+                            <th><i class="fas fa-money-bill-wave"></i> Summa</th>
+                            <th><i class="fas fa-clock"></i> Yaratilgan Vaqt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bemor in bemorlar %}
+                        <tr>
+                            <td>{{ bemor.toliq_ism }}</td>
+                            <td>{{ bemor.yil }}</td>
+                            <td>{{ bemor.hudud }}</td>
+                            <td>{{ bemor.summa }}</td>
+                            <td>{{ bemor.yaratilgan_vaqt|date:"Y-m-d H:i" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">Hozircha bemorlar yo‘q</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

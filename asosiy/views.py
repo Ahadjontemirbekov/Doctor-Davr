@@ -1,10 +1,13 @@
-import os
+import random
 
 from django.contrib.auth import authenticate, login
-from django.contrib.sites import requests
 from django.shortcuts import render, redirect
-from .models import *
-from .forms import CustomUserCreationForm
+from .forms import *
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Bemorlar
+
+
 def home(request):
     malumot=Malumot.objects.all()
     kirgandagitext=Kirgandagitext.objects.all()
@@ -20,6 +23,8 @@ def home(request):
     qabul = Qabul.objects.all()
     galareya = Galareya.objects.all()
     engkopsavol = EngKOpSavol.objects.all()
+    botniozgartirish = BotniOzgartirish.objects.all()
+    kanlaniozgartirish = KanlaniOzgartirish.objects.all()
     context={
         'model':malumot,
         'kirgandagitext':kirgandagitext,
@@ -35,8 +40,8 @@ def home(request):
         'qabul': qabul,
         'galareya': galareya,
         'engkopsavol': engkopsavol,
-        'token': os.environ.get('TOKEN'),
-        'kanal': os.environ.get('KANAL'),
+        'token': botniozgartirish,
+        'kanal': kanlaniozgartirish,
     }
     return render(request,'user/index.html',context)
 
@@ -64,3 +69,130 @@ def royxatdan_otish(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'royxatdan_otish/index.html', {'form': form})
+
+
+
+
+def dashboard(request):
+    yangi_bemorlar_soni = Bemorlar.objects.filter(
+        yaratilgan_vaqt__gte=timezone.now() - timezone.timedelta(days=30)
+    ).count()
+
+    bugun = timezone.now().date()
+    bugungi_qabullar = Bemorlar.objects.filter(
+        yaratilgan_vaqt__date=bugun
+    ).count()
+
+    oy_boshi = timezone.now().replace(day=1)
+    oylik_daromad = Bemorlar.objects.filter(
+        yaratilgan_vaqt__gte=oy_boshi
+    ).aggregate(total_summa=models.Sum('summa'))['total_summa'] or 0
+
+    jami_bemorlar = Bemorlar.objects.count()
+    xizmat_foizi = round((bugungi_qabullar / jami_bemorlar) * 100, 2) if jami_bemorlar > 0 else 0
+
+    avatars = [
+                  f"https://randomuser.me/api/portraits/men/{i}.jpg" for i in range(1, 51)
+              ] + [
+                  f"https://randomuser.me/api/portraits/women/{i}.jpg" for i in range(1, 51)
+              ]
+
+    bemorlar = Bemorlar.objects.order_by('-yaratilgan_vaqt')[:5]
+    yangi_qabullar = []
+    for b in bemorlar:
+        b.rasm_url = random.choice(avatars)
+        yangi_qabullar.append(b)
+
+    context = {
+        'yangi_bemorlar_soni': yangi_bemorlar_soni,
+        'bugungi_qabullar': bugungi_qabullar,
+        'oylik_daromad': oylik_daromad,
+        'xizmat_foizi': xizmat_foizi,
+        'yangi_qabullar': yangi_qabullar,
+    }
+    return render(request, 'admin_panel/index.html', context)
+
+
+
+def royxatdan_otish_b(request):
+    if request.method == 'POST':
+        form = BemorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('royxatdan_otish_b')
+    else:
+        form = BemorForm()
+
+    bemorlar = Bemorlar.objects.all().order_by('-yaratilgan_vaqt')
+
+    return render(request, 'admin_panel/bemorlaruchun.html', {
+        'form': form,
+        'bemorlar': bemorlar
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

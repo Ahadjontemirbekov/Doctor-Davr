@@ -16,4 +16,7 @@ admin.site.register(Doctor)
 admin.site.register(Qabul)
 admin.site.register(Galareya)
 admin.site.register(EngKOpSavol)
+admin.site.register(BotniOzgartirish)
+admin.site.register(KanlaniOzgartirish)
+admin.site.register(Bemorlar)
 

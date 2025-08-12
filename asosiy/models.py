@@ -196,3 +196,37 @@ class OnlineQabul(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.doctor} ({self.date})"
+
+class BotniOzgartirish(models.Model):
+    bot_token=models.CharField(max_length=300)
+
+    yaratilgan_vaqt = models.DateTimeField(auto_now_add=True)
+    har_safar_ozgartirilgandagi_vaqt = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.bot_token
+
+class KanlaniOzgartirish(models.Model):
+    kanal_url=models.CharField(max_length=300)
+
+    yaratilgan_vaqt = models.DateTimeField(auto_now_add=True)
+    har_safar_ozgartirilgandagi_vaqt = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.kanal_url
+
+
+class Bemorlar(models.Model):
+    toliq_ism=models.CharField(max_length=400)
+    yil=models.IntegerField()
+    hudud=models.CharField(max_length=100)
+    summa=models.IntegerField()
+
+    yaratilgan_vaqt = models.DateTimeField(auto_now_add=True)
+    har_safar_ozgartirilgandagi_vaqt = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.toliq_ism
+
+
+

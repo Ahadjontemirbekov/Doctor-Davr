@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="uz">
+{%load static%}
+{% load humanize %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Davr Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'admin_panel/admin_index.css'%}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-user-md"></i>
+                    <span>Doctor Davr Admin</span>
+                </div>
+                <div class="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="active">
+                        <a href="#">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Boshqaruv paneli</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-users"></i>
+                            <span>Bemorlar</span>
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">Barcha bemorlar</a></li>
+                            <li><a href="#">Yangi bemorlar</a></li>
+                            <li><a href="#">Qayta kelganlar</a></li>
+                            <li><a href="#">Muntazam bemorlar</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-user-md"></i>
+                            <span>Shifokorlar</span>
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">Barcha shifokorlar</a></li>
+                            <li><a href="#">Mutaxassisliklar</a></li>
+                            <li><a href="#">Ish jadvali</a></li>
+                            <li><a href="#">Shifokor qo'shish</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Qabullar</span>
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">Barcha qabullar</a></li>
+                            <li><a href="#">Kutilayotganlar</a></li>
+                            <li><a href="#">Tasdiqlanganlar</a></li>
+                            <li><a href="#">Bekor qilinganlar</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-procedures"></i>
+                            <span>Xizmatlar</span>
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">Barcha xizmatlar</a></li>
+                            <li><a href="#">Tashhis turlari</a></li>
+                            <li><a href="#">Narxlar</a></li>
+                            <li><a href="#">Xizmat qo'shish</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analitika</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-comment-medical"></i>
+                            <span>Sharhlar</span>
+                            <span class="badge">24</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span>Sozlamalar</span>
+                            <i class="fas fa-angle-right dropdown"></i>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#">Biz Haqimizda</a></li>
+                            <li><a href="#">Botni o'zgartirish</a></li>
+                            <li><a href="#">Doctorlar</a></li>
+                            <li><a href="#">Eng ko'p berilgan savol</a></li>
+                            <li><a href="#">Galareya</a></li>
+                            <li><a href="#">Ishxona nomi</a></li>
+                            <li><a href="#">Kanalni o'zgartirish</a></li>
+                            <li><a href="#">Saytga kirgandagi sarlovha</a></li>
+                            <li><a href="#">Kvadtarchalar</a></li>
+                            <li><a href="#">Saytda korinadigan malumotlar</a></li>
+                            <li><a href="#">Pitichkalar</a></li>
+                            <li><a href="#">Qabul</a></li>
+                            <li><a href="#">Tashhislar</a></li>
+                            <li><a href="#">Vaqt manzil telefon</a></li>
+                            <li><a href="#">Video turi</a></li>
+                            <li><a href="#">Video</a></li>
+                            <li><a href="#">Xizmatlarimiz</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin User">
+                    </div>
+                    <div class="user-info">
+                        <span class="name">Admin Davr</span>
+                        <span class="role">Super Admin</span>
+                    </div>
+                    <div class="user-actions">
+                        <a href="#"><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Qidiruv...">
+                </div>
+
+                <div class="top-nav-right">
+                    <div class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">5</span>
+                    </div>
+                    <div class="message">
+                        <i class="fas fa-envelope"></i>
+                        <span class="badge">12</span>
+                    </div>
+                    <div class="user-menu">
+                        <div class="avatar">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin User">
+                        </div>
+                        <span>Admin Davr</span>
+                        <i class="fas fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Header -->
+            <div class="dashboard-widgets">
+                <div class="widget">
+                    <div class="widget-icon bg-primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="widget-info">
+                        <h3>{{ yangi_bemorlar_soni }}</h3>
+                        <p>Yangi bemorlar (so'nggi 30 kun)</p>
+                    </div>
+                    <div class="widget-footer">
+                        <a href="#">Barchasini ko'rish</a>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-icon bg-success">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="widget-info">
+                        <h3>{{ bugungi_qabullar }}</h3>
+                        <p>Bugungi qabullar</p>
+                    </div>
+                    <div class="widget-footer">
+                        <a href="#">Barchasini ko'rish</a>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-icon bg-warning">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="widget-info">
+                        <h3>{{ oylik_daromad|intcomma }} so'm</h3>
+                        <p>Oylik daromad</p>
+                    </div>
+                    <div class="widget-footer">
+                        <a href="#">Barchasini ko'rish</a>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-icon bg-danger">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <div class="widget-info">
+                        <h3>{{ xizmat_foizi }}%</h3>
+                        <p>Xizmatlar foizi</p>
+                    </div>
+                    <div class="widget-footer">
+                        <a href="#">Barchasini ko'rish</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Sections -->
+            <div class="content-sections">
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Yangi qabullar</h2>
+                        <a href="#" class="btn btn-primary">Barchasini ko'rish</a>
+                    </div>
+                    <div class="section-content">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Bemor</th>
+                                        <th>Yil</th>
+                                        <th>Hudud</th>
+                                        <th>Summa</th>
+                                        <th>Vaqt</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%for yangi_qabul in yangi_qabullar%}
+                                    <tr>
+                                        <td>{{yangi_qabul.id}}</td>
+                                        <td>
+                                            <div class="user-cell">
+                                                <img src="{{yangi_qabul.rasm_url}}" alt="User">
+                                                <span>{{yangi_qabul.toliq_ism}}</span>
+                                            </div>
+                                        </td>
+                                        <td>{{yangi_qabul.yil}}</td>
+                                        <td>{{yangi_qabul.hudud}}</td>
+                                        <td>{{yangi_qabul.summa}}</td>
+                                        <td>{{yangi_qabul.yaratilgan_vaqt}}</td>
+                                    </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Charts Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Statistika</h2>
+                        <div class="chart-controls">
+                            <button class="btn btn-sm btn-outline-primary active">Kunlik</button>
+                            <button class="btn btn-sm btn-outline-primary">Haftalik</button>
+                            <button class="btn btn-sm btn-outline-primary">Oylik</button>
+                            <button class="btn btn-sm btn-outline-primary">Yillik</button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="chart-container">
+                            <canvas id="appointmentsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Oxirgi harakatlar</h2>
+                        <a href="#" class="btn btn-primary">Barchasini ko'rish</a>
+                    </div>
+                    <div class="section-content">
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon bg-primary">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>John Smith</strong> yangi bemor sifatida ro'yxatdan o'tdi.</p>
+                                    <span class="activity-time">2 daqiqa oldin</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon bg-success">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p>Yangi qabul <strong>#QBL-7842</strong> yaratildi.</p>
+                                    <span class="activity-time">15 daqiqa oldin</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon bg-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p>Dr. Xakimov <strong>9D Diagnostika</strong> xizmati uchun yangi narx belgiladi.</p>
+                                    <span class="activity-time">1 soat oldin</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon bg-info">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p><strong>Sarah Johnson</strong> yangi sharh qoldirdi.</p>
+                                    <span class="activity-time">3 soat oldin</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon bg-danger">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <p>Qabul <strong>#QBL-7835</strong> bekor qilindi.</p>
+                                    <span class="activity-time">5 soat oldin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Statistics Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Bemorlar statistikasi</h2>
+                        <div class="chart-controls">
+                            <button class="btn btn-sm btn-outline-primary active">Bu oy</button>
+                            <button class="btn btn-sm btn-outline-primary">O'tgan oy</button>
+                            <button class="btn btn-sm btn-outline-primary">Bu yil</button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="chart-container">
+                            <canvas id="patientsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-left">
+                    <p>&copy; 2025 Doctor Davr. Barcha huquqlar himoyalangan.</p>
+                </div>
+                <div class="footer-right">
+                    <a href="#">Shartlar</a>
+                    <a href="#">Maxfiylik</a>
+                    <a href="#">Yordam</a>
+                    <a href="#">Aloqa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Patient Details -->
+    <div class="modal" id="patientModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Bemor tafsilotlari</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="patient-detail">
+                    <div class="patient-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Patient">
+                    </div>
+                    <div class="patient-info">
+                        <div class="info-row">
+                            <span class="info-label">Ism:</span>
+                            <span class="info-value">John Doe</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Tug'ilgan sana:</span>
+                            <span class="info-value">15.01.1985</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Telefon:</span>
+                            <span class="info-value">+998 90 123 45 67</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Manzil:</span>
+                            <span class="info-value">Toshkent sh., Yunusobod tumani</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Qon guruhi:</span>
+                            <span class="info-value">A+</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Holat:</span>
+                            <span class="info-value badge badge-success">Faol</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="patient-stats">
+                    <div class="stat-card">
+                        <h4>Qabullar</h4>
+                        <p>24</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Oxirgi kelgan</h4>
+                        <p>12.05.2023</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Xizmatlar</h4>
+                        <p>8 tur</p>
+                    </div>
+                </div>
+                <div class="patient-history">
+                    <h4>Qabul tarixi</h4>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <div class="history-date">12.05.2023</div>
+                            <div class="history-details">
+                                <strong>9D Diagnostika</strong> - Dr. Xakimov
+                            </div>
+                            <div class="history-status badge badge-success">Yakunlangan</div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-date">28.04.2023</div>
+                            <div class="history-details">
+                                <strong>Kardiologik konsultatsiya</strong> - Dr. Yusupova
+                            </div>
+                            <div class="history-status badge badge-success">Yakunlangan</div>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-date">15.03.2023</div>
+                            <div class="history-details">
+                                <strong>Labaratoriya tekshiruvi</strong> - Dr. Rahimov
+                            </div>
+                            <div class="history-status badge badge-success">Yakunlangan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">Yopish</button>
+                <button class="btn btn-primary">Tahrirlash</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Doctor Modal -->
+    <div class="modal" id="addDoctorModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Yangi shifokor qo'shish</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addDoctorForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ism</label>
+                            <input type="text" placeholder="Shifokor ismi" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Familiya</label>
+                            <input type="text" placeholder="Shifokor familiyasi" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mutaxassislik</label>
+                        <select required>
+                            <option value="">Tanlang</option>
+                            <option value="kardiolog">Kardiolog</option>
+                            <option value="nevrolog">Nevrolog</option>
+                            <option value="stomatolog">Stomatolog</option>
+                            <option value="ortoped">Ortoped</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" placeholder="Shifokor telefon raqami" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Elektron pochta</label>
+                        <input type="email" placeholder="Shifokor elektron pochtasi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rasm</label>
+                        <div class="file-upload">
+                            <input type="file" id="doctorImage" accept="image/*">
+                            <label for="doctorImage" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Rasm yuklash</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ish tajribasi</label>
+                        <input type="text" placeholder="Yillar soni" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Qo'shimcha ma'lumot</label>
+                        <textarea placeholder="Shifokor haqida qo'shimcha ma'lumot"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">Bekor qilish</button>
+                <button class="btn btn-primary">Qo'shish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Service Modal -->
+    <div class="modal" id="addServiceModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Yangi xizmat qo'shish</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addServiceForm">
+                    <div class="form-group">
+                        <label>Xizmat nomi</label>
+                        <input type="text" placeholder="Xizmat nomi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tashhis turi</label>
+                        <select required>
+                            <option value="">Tanlang</option>
+                            <option value="diagnostika">Diagnostika</option>
+                            <option value="jarrohlik">Jarrohlik</option>
+                            <option value="terapiya">Terapiya</option>
+                            <option value="reabilitatsiya">Reabilitatsiya</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Narx</label>
+                        <input type="number" placeholder="Xizmat narxi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Davomiylik</label>
+                        <input type="text" placeholder="Xizmat davomiyligi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Xizmat tavsifi</label>
+                        <textarea placeholder="Xizmat haqida batafsil" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Rasm</label>
+                        <div class="file-upload">
+                            <input type="file" id="serviceImage" accept="image/*">
+                            <label for="serviceImage" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Rasm yuklash</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">Bekor qilish</button>
+                <button class="btn btn-primary">Qo'shish</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'js/admin_panel.js' %}"></script>
+</body>
+</html>
